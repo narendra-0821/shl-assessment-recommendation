@@ -8,9 +8,10 @@ query = st.text_input("Enter role or job description")
 if st.button("Get Recommendation") and query:
     try:
         response = requests.get(
-            "https://shl-backend-rbiy.onrender.com/recommend",
+            "https://shl-backend-rbiy.onrender.com/recommend",  # <- Make sure this is correct
             params={"query": query}
-        )
+)
+
         if response.status_code == 200:
             recommendation = response.json().get("recommendation")
             st.success(f"Recommended Assessment: {recommendation}")
