@@ -24,7 +24,9 @@ app.add_middleware(
 @app.get("/health")
 def health():
     return {"status": "healthy"}
-
+@app.get("/")
+def root():
+    return {"message": "SHL Recommendation API is live"}
 # Input format for POST
 class RecommendRequest(BaseModel):
     query: str
