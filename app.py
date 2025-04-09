@@ -1,13 +1,13 @@
-import streamlit as st
-import requests
-
-st.title("SHL Assessment Recommendation")
-
-query = st.text_input("Enter role or job description")
-
 if st.button("Get Recommendation") and query:
     try:
-        response = requests.post("https://shl-backend-rbiy.onrender.com/recommend", json={"query": query})
+        response = requests.post(
+            "https://shl-backend-rbiy.onrender.com/recommend",
+            json={"query": query},
+            timeout=10
+        )
+
+        st.write("Status Code:", response.status_code)
+        st.write("Response:", response.text)
 
         if response.status_code == 200:
             assessments = response.json().get("recommended_assessments", [])
