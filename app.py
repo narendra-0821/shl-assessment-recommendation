@@ -7,14 +7,14 @@ query = st.text_input("Enter role or job description")
 
 if st.button("Get Recommendation") and query:
     try:
-        response = requests.get(
-            "https://shl-backend-rbiy.onrender.com/recommend",  # <- Make sure this is correct
-            params={"query": query}
-)
-
+        response = requests.post(
+            "http://127.0.0.1:8000/recommend",  # use your local or live backend URL
+            json={"query": query}
+        )
         if response.status_code == 200:
-            recommendation = response.json().get("recommendation")
-            st.success(f"Recommended Assessment: {recommendation}")
+            assessments = response.json().get("recommended_assessments", [])
+            for a in assessments:
+                st.success(f"Recommended: {a['description']}\nDuration: {a['duration']} min")
         else:
             st.error("Failed to get recommendation.")
     except Exception as e:
